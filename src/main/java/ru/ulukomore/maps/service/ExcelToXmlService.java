@@ -22,7 +22,8 @@ public class ExcelToXmlService {
             Sheet sheet = workbook.getSheetAt(0);
             Iterable<Row> rows = sheet::rowIterator;
             StreamSupport.stream(rows.spliterator(), false)
-                    .skip(1);
+                    .skip(1)
+                    .map(row -> null);
         } catch (IOException e) {
             e.printStackTrace();
         }
