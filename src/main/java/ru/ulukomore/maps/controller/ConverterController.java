@@ -12,12 +12,12 @@ import javax.ws.rs.Path;
 @Controller
 @Path("/convert")
 @RequiredArgsConstructor
-public class MapsController {
+public class ConverterController {
 
     private final ExcelToXmlService excelToXmlService;
 
     @POST
-    public String hello(@Multipart("file") Attachment file) {
+    public String convert(@Multipart("file") Attachment file) {
         excelToXmlService.convertExcelToXml(file);
         return "done";
     }

@@ -2,7 +2,6 @@ package ru.ulukomore.maps.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,7 +21,8 @@ public class ExcelToXmlService {
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
             Iterable<Row> rows = sheet::rowIterator;
-            StreamSupport.stream(rows.spliterator(), false);
+            StreamSupport.stream(rows.spliterator(), false)
+                    .skip(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
