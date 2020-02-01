@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.ulukomore.maps</groupId>
-    <artifactId>ulukonoremaps</artifactId>
+    <artifactId>ulukomoremaps</artifactId>
     <version>1.0</version>
-    <name>ulukonoremaps</name>
+    <name>ulukomoremaps</name>
     <description>Tool to convert Excel to xml and share it to maps</description>
 
     <properties>
@@ -50,7 +50,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <!--APACHE CXF-->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
@@ -81,7 +81,7 @@
             <artifactId>swagger-jaxrs</artifactId>
             <version>1.5.21</version>
         </dependency>
-
+        <!--APACHE POI-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>

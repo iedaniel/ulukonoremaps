@@ -1,10 +1,10 @@
-package ru.ulukomore.maps.ulukonoremaps;
+package ru.ulukomore.maps.ulukomoremaps;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UlukonoremapsApplicationTests {
+class UlukomoremapsApplicationTests {
 
     @Test
     void contextLoads() {
