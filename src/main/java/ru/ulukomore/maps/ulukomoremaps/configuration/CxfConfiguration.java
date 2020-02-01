@@ -1,4 +1,4 @@
-package ru.ulukomore.maps.ulukonoremaps.configuration;
+package ru.ulukomore.maps.ulukomoremaps.configuration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

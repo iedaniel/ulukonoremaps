@@ -31,15 +31,11 @@ public class ExcelToXmlService {
                     .skip(1)
                     .collect(Collectors.toList());
             Village village = new Village(rows);
-            try {
-                JAXBContext context = JAXBContext.newInstance(Village.class);
-                Marshaller jaxbMarshaller = context.createMarshaller();
-                jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                jaxbMarshaller.marshal(village, System.out);
-            } catch (JAXBException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
+            JAXBContext context = JAXBContext.newInstance(Village.class);
+            Marshaller jaxbMarshaller = context.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            jaxbMarshaller.marshal(village, System.out);
+        } catch (IOException | JAXBException e) {
             e.printStackTrace();
         }
     }

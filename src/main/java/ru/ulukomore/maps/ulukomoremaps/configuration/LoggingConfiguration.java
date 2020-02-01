@@ -1,4 +1,4 @@
-package ru.ulukomore.maps.ulukonoremaps.configuration;
+package ru.ulukomore.maps.ulukomoremaps.configuration;
 
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
