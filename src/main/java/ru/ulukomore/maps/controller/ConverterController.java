@@ -17,8 +17,8 @@ public class ConverterController {
     private final ExcelToXmlService excelToXmlService;
 
     @POST
-    public String convert(@Multipart("file") Attachment file) {
-        excelToXmlService.convertExcelToXml(file);
+    public String convert() {
+        excelToXmlService.convertExcelToXml();
         return "done";
     }
 }

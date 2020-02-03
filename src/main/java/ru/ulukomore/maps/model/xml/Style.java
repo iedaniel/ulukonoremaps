@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -26,6 +27,7 @@ public class Style {
     }
 
     private String hexFromRow(Row row) {
-        return "color";
+        XSSFColor color = (XSSFColor) row.getCell(0).getCellStyle().getFillForegroundColorColor();
+        return "#" + color.getARGBHex();
     }
 }
