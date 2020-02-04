@@ -99,6 +99,12 @@
             <version>3.1.2</version>
             <scope>test</scope>
         </dependency>
+        <!--FTP Client-->
+        <dependency>
+            <groupId>com.hierynomus</groupId>
+            <artifactId>sshj</artifactId>
+            <version>0.27.0</version>
+        </dependency>
     </dependencies>
 
     <build>

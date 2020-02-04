@@ -1,6 +1,7 @@
 package ru.ulukomore.maps.service;
 
 import lombok.RequiredArgsConstructor;
+import net.schmizz.sshj.SSHClient;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -47,5 +49,16 @@ public class ExcelToXmlService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean wasUpdates() {
+        try {
+            FileTime lastUpdate = Files.getLastModifiedTime(Paths.get(pathToXslx));
+            //TODO подключить инмемори базу и сравнивать со временем оттуда
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
