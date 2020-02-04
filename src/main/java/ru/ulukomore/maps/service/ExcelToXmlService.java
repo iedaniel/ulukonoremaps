@@ -1,10 +1,10 @@
 package ru.ulukomore.maps.service;
 
 import lombok.RequiredArgsConstructor;
-import net.schmizz.sshj.SSHClient;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.ulukomore.maps.model.xml.Village;
@@ -17,7 +17,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -26,6 +27,8 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class ExcelToXmlService {
 
+    @Autowired
+    private LocalDateTime lastUpdate;
     @Value("${app.xsls.path}")
     private String pathToXslx;
 
@@ -41,7 +44,7 @@ public class ExcelToXmlService {
             Village village = new Village(rows);
             JAXBContext context = JAXBContext.newInstance(Village.class);
             Marshaller jaxbMarshaller = context.createMarshaller();
-            File output = new File("out.xml");
+            File output = new File("gout.xml");
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(village, output);
             return output;
@@ -51,14 +54,19 @@ public class ExcelToXmlService {
         return null;
     }
 
-    public boolean wasUpdates() {
+    public boolean updateFound() {
         try {
-            FileTime lastUpdate = Files.getLastModifiedTime(Paths.get(pathToXslx));
-            //TODO подключить инмемори базу и сравнивать со временем оттуда
-            return true;
+            LocalDateTime lastUpdateFile = LocalDateTime.ofInstant(
+                    Files.getLastModifiedTime(Paths.get(pathToXslx)).toInstant(),
+                    ZoneId.systemDefault()
+            );
+            if (lastUpdateFile.isAfter(lastUpdate)) {
+                lastUpdate = lastUpdateFile;
+                return true;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 }

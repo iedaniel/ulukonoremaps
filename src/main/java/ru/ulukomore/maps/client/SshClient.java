@@ -1,0 +1,37 @@
+package ru.ulukomore.maps.client;
+
+
+import lombok.AllArgsConstructor;
+import net.schmizz.sshj.SSHClient;
+import net.schmizz.sshj.sftp.SFTPClient;
+import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
+
+import java.io.IOException;
+
+@AllArgsConstructor
+public class SshClient {
+
+    private String remoteHost;
+    private String username;
+    private String password;
+
+    public void put(String name, String path) {
+        try {
+            SSHClient sshClient = setupSshj();
+            SFTPClient sftpClient = sshClient.newSFTPClient();
+            sftpClient.put(name, path);
+            sftpClient.close();
+            sshClient.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private SSHClient setupSshj() throws IOException {
+        SSHClient client = new SSHClient();
+        client.addHostKeyVerifier(new PromiscuousVerifier());
+        client.connect(remoteHost);
+        client.authPassword(username, password);
+        return client;
+    }
+}
