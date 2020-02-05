@@ -29,6 +29,7 @@ public class CheckUpdatesService {
     @Value("${app.ftp.password}")
     private String password;
     @Value("${app.xlsx.config}")
+    private String configPath;
 
     @Scheduled(fixedDelay = 60000)
     public void check() {
@@ -36,7 +37,7 @@ public class CheckUpdatesService {
             return;
         }
         try {
-            FileInputStream routesFile = new FileInputStream(new File("route"));
+            FileInputStream routesFile = new FileInputStream(new File(configPath));
             XSSFWorkbook workbook = new XSSFWorkbook(routesFile);
             Sheet sheet = workbook.getSheetAt(0);
             Iterable<Row> rowsIter = sheet::rowIterator;
