@@ -7,6 +7,7 @@ import net.schmizz.sshj.sftp.SFTPClient;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 
 import java.io.IOException;
+import java.util.Map;
 
 @AllArgsConstructor
 public class SshClient {
@@ -15,11 +16,15 @@ public class SshClient {
     private String username;
     private String password;
 
-    public void put(String name, String path) {
+    public void put(Map<String, String> pathByName) {
         try {
             SSHClient sshClient = setupSshj();
             SFTPClient sftpClient = sshClient.newSFTPClient();
-            sftpClient.put(name, path);
+            for (Map.Entry<String, String> entry : pathByName.entrySet()) {
+                String name = entry.getKey();
+                String path = entry.getValue();
+                sftpClient.put(name, path);
+            }
             sftpClient.close();
             sshClient.disconnect();
         } catch (IOException e) {

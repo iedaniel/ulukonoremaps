@@ -32,11 +32,11 @@ public class ExcelToXmlService {
     @Value("${app.xsls.path}")
     private String pathToXslx;
 
-    public File convertExcelToXml() {
+    public File convertExcelToXml(String resultName) {
         try {
             FileInputStream file = new FileInputStream(new File(pathToXslx));
             XSSFWorkbook workbook = new XSSFWorkbook(file);
-            Sheet sheet = workbook.getSheetAt(0);
+            Sheet sheet = workbook.getSheet(resultName);
             Iterable<Row> rowIterator = sheet::rowIterator;
             List<Row> rows = StreamSupport.stream(rowIterator.spliterator(), false)
                     .skip(1)
@@ -44,7 +44,7 @@ public class ExcelToXmlService {
             Village village = new Village(rows);
             JAXBContext context = JAXBContext.newInstance(Village.class);
             Marshaller jaxbMarshaller = context.createMarshaller();
-            File output = new File("gout.xml");
+            File output = new File(String.format("%s.xml", resultName));
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(village, output);
             return output;
