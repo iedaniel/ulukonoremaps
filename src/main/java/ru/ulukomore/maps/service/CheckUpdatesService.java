@@ -28,6 +28,7 @@ public class CheckUpdatesService {
     private String username;
     @Value("${app.ftp.password}")
     private String password;
+    @Value("${app.xlsx.config}")
 
     @Scheduled(fixedDelay = 60000)
     public void check() {
@@ -35,8 +36,8 @@ public class CheckUpdatesService {
             return;
         }
         try {
-            FileInputStream routesfile = new FileInputStream(new File("route"));
-            XSSFWorkbook workbook = new XSSFWorkbook(routesfile);
+            FileInputStream routesFile = new FileInputStream(new File("route"));
+            XSSFWorkbook workbook = new XSSFWorkbook(routesFile);
             Sheet sheet = workbook.getSheetAt(0);
             Iterable<Row> rowsIter = sheet::rowIterator;
             Map<String, String> pathBySheet = new HashMap<>();
@@ -50,8 +51,6 @@ public class CheckUpdatesService {
                 File file = excelToXmlService.convertExcelToXml(name);
                 pathByName.put(file.getName(), path);
             });
-//        File newXml = excelToXmlService.convertExcelToXml("out");
-//        pathByName.put(newXml.getName(), "/var/www/u0801958/data/www/ulukomore.ru/maps/testik");
             SshClient sshClient = new SshClient(remoteHost, username, password);
             sshClient.put(pathByName);
         } catch (IOException e) {
