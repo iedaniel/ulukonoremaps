@@ -24,7 +24,7 @@ public class Params {
     private String status;
 
     public Params(Row row) {
-        this.area = row.getCell(2).getNumericCellValue();
-        this.status = row.getCell(7).getStringCellValue();
+        this.area = row.getCell(1).getNumericCellValue();
+        this.status = row.getCell(6).getStringCellValue();
     }
 }

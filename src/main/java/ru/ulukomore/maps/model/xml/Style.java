@@ -3,6 +3,7 @@ package ru.ulukomore.maps.model.xml;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.poi.ss.usermodel.ExtendedColor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 
@@ -10,6 +11,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -23,11 +25,13 @@ public class Style {
 
     public Style(Row row) {
         this.color = hexFromRow(row);
-
     }
 
     private String hexFromRow(Row row) {
         XSSFColor color = (XSSFColor) row.getCell(0).getCellStyle().getFillForegroundColorColor();
-        return "#" + color.getARGBHex();
+        return "#" + Optional.ofNullable(color)
+                .map(ExtendedColor::getARGBHex)
+                .map(s -> s.substring(2))
+                .orElse("fff");
     }
 }

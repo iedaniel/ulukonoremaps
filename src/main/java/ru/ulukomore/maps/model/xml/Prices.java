@@ -30,9 +30,9 @@ public class Prices {
     private Double obustr;
 
     public Prices(Row row) {
-        this.sotka = row.getCell(3).getNumericCellValue();
-        this.land = row.getCell(4).getNumericCellValue();
-        this.arrangement = row.getCell(6).getNumericCellValue();
-        this.obustr = row.getCell(5).getNumericCellValue();
+        this.sotka = row.getCell(2).getNumericCellValue();
+        this.land = row.getCell(3).getNumericCellValue();
+        this.arrangement = row.getCell(4).getNumericCellValue();
+        this.obustr = row.getCell(4).getNumericCellValue();
     }
 }

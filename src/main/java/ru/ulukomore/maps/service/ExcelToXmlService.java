@@ -47,6 +47,7 @@ public class ExcelToXmlService {
             File output = new File(String.format("%s.xml", resultName));
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(village, output);
+            file.close();
             return output;
         } catch (IOException | JAXBException e) {
             e.printStackTrace();
