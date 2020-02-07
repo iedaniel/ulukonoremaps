@@ -23,18 +23,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static ru.ulukomore.maps.Constants.PATH_TO_XLSX;
+
 @Service
 @RequiredArgsConstructor
 public class ExcelToXmlService {
 
     @Autowired
     private LocalDateTime lastUpdate;
-    @Value("${app.xsls.path}")
-    private String pathToXslx;
+
 
     public File convertExcelToXml(String resultName) {
         try {
-            FileInputStream file = new FileInputStream(new File(pathToXslx));
+            FileInputStream file = new FileInputStream(new File(PATH_TO_XLSX));
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheet(resultName);
             Iterable<Row> rowIterator = sheet::rowIterator;
@@ -58,7 +59,7 @@ public class ExcelToXmlService {
     public boolean updateFound() {
         try {
             LocalDateTime lastUpdateFile = LocalDateTime.ofInstant(
-                    Files.getLastModifiedTime(Paths.get(pathToXslx)).toInstant(),
+                    Files.getLastModifiedTime(Paths.get(PATH_TO_XLSX)).toInstant(),
                     ZoneId.systemDefault()
             );
             if (lastUpdateFile.isAfter(lastUpdate)) {

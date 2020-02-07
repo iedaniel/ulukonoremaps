@@ -10,17 +10,16 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import static ru.ulukomore.maps.Constants.PATH_TO_XLSX;
+
 @Configuration
 public class UpdateTimeConfiguration {
-
-    @Value("${app.xsls.path}")
-    private String pathToXslx;
 
     @Bean
     public LocalDateTime lastUpdate() {
         try {
             return LocalDateTime.ofInstant(
-                    Files.getLastModifiedTime(Paths.get(pathToXslx)).toInstant(),
+                    Files.getLastModifiedTime(Paths.get(PATH_TO_XLSX)).toInstant(),
                     ZoneId.systemDefault()
             );
         } catch (IOException e) {

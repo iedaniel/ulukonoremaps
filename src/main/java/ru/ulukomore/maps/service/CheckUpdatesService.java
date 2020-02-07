@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.ulukomore.maps.client.SshClient;
@@ -16,20 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
+import static ru.ulukomore.maps.Constants.*;
+
 @Service
 @RequiredArgsConstructor
 public class CheckUpdatesService {
 
     private final ExcelToXmlService excelToXmlService;
-
-    @Value("${app.ftp.server}")
-    private String remoteHost;
-    @Value("${app.ftp.user}")
-    private String username;
-    @Value("${app.ftp.password}")
-    private String password;
-    @Value("${app.xlsx.config}")
-    private String configPath;
 
     @Scheduled(fixedDelay = 60000)
     public void check() {
@@ -37,7 +29,7 @@ public class CheckUpdatesService {
             return;
         }
         try {
-            FileInputStream routesFile = new FileInputStream(new File(configPath));
+            FileInputStream routesFile = new FileInputStream(new File(PATH_TO_CONFIG));
             XSSFWorkbook workbook = new XSSFWorkbook(routesFile);
             Sheet sheet = workbook.getSheetAt(0);
             Iterable<Row> rowsIter = sheet::rowIterator;
@@ -52,7 +44,7 @@ public class CheckUpdatesService {
                 File file = excelToXmlService.convertExcelToXml(name);
                 pathByName.put(file.getName(), path);
             });
-            SshClient sshClient = new SshClient(remoteHost, username, password);
+            SshClient sshClient = new SshClient(HOST_URL, HOST_USER, HOST_PASSWORD);
             sshClient.put(pathByName);
         } catch (IOException e) {
             e.printStackTrace();
