@@ -18,7 +18,7 @@ public class SshClient {
 
     public void put(Map<String, String> pathByName) {
         try {
-            SSHClient sshClient = setupSshj();
+            SSHClient sshClient = setupSsh();
             SFTPClient sftpClient = sshClient.newSFTPClient();
             for (Map.Entry<String, String> entry : pathByName.entrySet()) {
                 String name = entry.getKey();
@@ -32,7 +32,7 @@ public class SshClient {
         }
     }
 
-    private SSHClient setupSshj() throws IOException {
+    private SSHClient setupSsh() throws IOException {
         SSHClient client = new SSHClient();
         client.addHostKeyVerifier(new PromiscuousVerifier());
         client.connect(remoteHost);
