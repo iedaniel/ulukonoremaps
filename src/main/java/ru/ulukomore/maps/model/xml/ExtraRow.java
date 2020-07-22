@@ -25,7 +25,7 @@ public class ExtraRow {
     private String value;
 
     public ExtraRow(String value) {
-        this.label = "Кадастровый номер";
+        this.label = "Комментарий:";
         this.value = value;
     }
 }

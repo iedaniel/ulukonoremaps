@@ -37,7 +37,7 @@ public class Region {
         this.style = new Style(row);
         this.params = new Params(row);
         this.prices = new Prices(row);
-        this.extraRow = Optional.ofNullable(row.getCell(7))
+        this.extraRow = Optional.ofNullable(row.getCell(8))
                 .map(Cell::getStringCellValue)
                 .map(ExtraRow::new)
                 .orElse(null);

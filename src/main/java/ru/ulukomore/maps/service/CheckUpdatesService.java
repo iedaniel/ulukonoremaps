@@ -23,7 +23,7 @@ public class CheckUpdatesService {
 
     private final ExcelToXmlService excelToXmlService;
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 6000)
     public void check() {
         if (!excelToXmlService.updateFound()) {
             return;
